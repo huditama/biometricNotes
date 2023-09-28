@@ -10,6 +10,8 @@
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
     "global-require": 0,
     "react/function-component-definition": [
       2,
