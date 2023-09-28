@@ -1,7 +1,7 @@
 import {
   View,
-  Text,
   StyleSheet,
+  Text,
 } from 'react-native';
 
 const Styles = StyleSheet.create({
@@ -12,8 +12,8 @@ const Styles = StyleSheet.create({
   },
 });
 
-export const Home = () => (
+export const Notes = () => (
   <View style={Styles.container}>
-    <Text>Hello World</Text>
+    <Text>Notes</Text>
   </View>
 );

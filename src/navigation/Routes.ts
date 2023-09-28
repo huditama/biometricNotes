@@ -1,3 +1,4 @@
 export const Routes = {
-  Home: 'Home',
+  Authenticate: 'Authenticate',
+  Notes: 'Notes',
 };

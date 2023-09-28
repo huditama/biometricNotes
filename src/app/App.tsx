@@ -7,6 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { Colors } from '../themes/Colors';
 import { RootNavigator } from '../navigation/RootNavigator';
+import { RootProvider } from '../context/RootContext';
 
 const Styles = StyleSheet.create({
   safeAreaView: {
@@ -19,7 +20,9 @@ const App = () => (
   <NavigationContainer>
     <StatusBar backgroundColor={Colors.WHITE} barStyle="dark-content" />
     <SafeAreaView style={Styles.safeAreaView}>
-      <RootNavigator />
+      <RootProvider>
+        <RootNavigator />
+      </RootProvider>
     </SafeAreaView>
   </NavigationContainer>
 );
