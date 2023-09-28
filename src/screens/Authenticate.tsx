@@ -5,8 +5,16 @@ import {
   Button,
 } from 'react-native';
 
+import {
+  decryptNotes,
+  storeEncryptionKey,
+  promptAuthentication,
+  generateEncryptionKey,
+  retrieveEncryptionKey,
+  checkBiometricsAvailability,
+  retrieveNotes,
+} from '../utils/Helpers';
 import { RootContext } from '../context/RootContext';
-import { checkBiometricsAvailability, promptAuthentication } from '../utils/Helpers';
 
 const Styles = StyleSheet.create({
   container: {
@@ -17,15 +25,39 @@ const Styles = StyleSheet.create({
 });
 
 export const Authenticate = () => {
-  const { setAuthenticated } = useContext(RootContext);
+  const { setAuthenticated, setNotes } = useContext(RootContext);
 
-  const checkBiometrics = async () => {
-    const result = await checkBiometricsAvailability();
+  const fetchData = async () => {
+    try {
+      const key = await retrieveEncryptionKey();
 
-    if (result) {
-      const promptResult = await promptAuthentication();
+      // If key is present, decrypt and set notes as state
+      if (key) {
+        const encryptedNotes = await retrieveNotes();
+        if (encryptedNotes) {
+          const decryptedNotes = decryptNotes(encryptedNotes, key);
+          setNotes(decryptedNotes);
+        }
 
-      if (promptResult) {
+        // If key is not available, generate new one
+      } else {
+        const generatedKey = generateEncryptionKey();
+        await storeEncryptionKey(generatedKey);
+        fetchData();
+      }
+    } catch (error) {
+      // Error
+    }
+  };
+
+  const authenticate = async () => {
+    const biometricsAvailable = await checkBiometricsAvailability();
+
+    if (biometricsAvailable) {
+      const authenticated = await promptAuthentication();
+
+      if (authenticated) {
+        await fetchData();
         setAuthenticated(true);
       }
     }
@@ -33,7 +65,7 @@ export const Authenticate = () => {
 
   return (
     <View style={Styles.container}>
-      <Button title="Authenticate" onPress={checkBiometrics} />
+      <Button title="Authenticate" onPress={authenticate} />
     </View>
   );
 };

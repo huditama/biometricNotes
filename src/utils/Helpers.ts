@@ -1,6 +1,56 @@
+import CryptoJS from 'crypto-js';
+import SensitiveInfo from 'react-native-sensitive-info';
 import ReactNativeBiometrics from 'react-native-biometrics';
 
+import { Note } from '../types/Notes';
+import { Constants } from './Constants';
+
 const Biometrics = new ReactNativeBiometrics({ allowDeviceCredentials: true });
+
+export const generateEncryptionKey = () => {
+  const randomBytes = CryptoJS.lib.WordArray.random(32);
+  return randomBytes.toString(CryptoJS.enc.Hex);
+};
+
+export const encryptNotes = (notes: Note[], key: string) => {
+  const stringifyNotes = JSON.stringify(notes);
+  const encryptedNotes = CryptoJS.AES.encrypt(stringifyNotes, key).toString();
+  return encryptedNotes;
+};
+
+export const decryptNotes = (encryptedNotes: string, key: string): Note[] => {
+  const bytes = CryptoJS.AES.decrypt(encryptedNotes, key);
+  const decryptedNotes = bytes.toString(CryptoJS.enc.Utf8);
+  return JSON.parse(decryptedNotes);
+};
+
+export const retrieveNotes = async () => {
+  try {
+    const notes = await SensitiveInfo.getItem(Constants.Notes, {});
+    return notes;
+  } catch (error) {
+    // Error
+    return null;
+  }
+};
+
+export const storeEncryptionKey = async (key: string) => {
+  try {
+    await SensitiveInfo.setItem(Constants.Encryption_Key, key, {});
+  } catch (error) {
+    // Error
+  }
+};
+
+export const retrieveEncryptionKey = async () => {
+  try {
+    const key = await SensitiveInfo.getItem(Constants.Encryption_Key, {});
+    return key;
+  } catch (error) {
+    // Error
+    return null;
+  }
+};
 
 export const checkBiometricsAvailability = async () => {
   try {
