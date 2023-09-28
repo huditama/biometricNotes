@@ -55,11 +55,12 @@ export const Authenticate = () => {
 
     if (biometricsAvailable) {
       const authenticated = await promptAuthentication();
-
       if (authenticated) {
         await fetchData();
         setAuthenticated(true);
       }
+    } else {
+      alert('Please enable biometric security measures in your device for a more secure experience!');
     }
   };
 
