@@ -34,6 +34,14 @@ export const retrieveNotes = async () => {
   }
 };
 
+export const storeNotes = async (encryptedNotes: string) => {
+  try {
+    await SensitiveInfo.setItem(Constants.Notes, encryptedNotes, {});
+  } catch (error) {
+    // Error
+  }
+};
+
 export const storeEncryptionKey = async (key: string) => {
   try {
     await SensitiveInfo.setItem(Constants.Encryption_Key, key, {});
@@ -68,4 +76,15 @@ export const promptAuthentication = async () => {
   } catch (error) {
     return false;
   }
+};
+
+export const formatDate = (date: Date) => {
+  const dateFormat = new Date(date);
+
+  const day = dateFormat.getDate().toString().padStart(2, '0');
+  const month = (dateFormat.getMonth() + 1).toString().padStart(2, '0');
+  const year = dateFormat.getFullYear().toString().slice(-2);
+
+  const formattedDate = `${day}/${month}/${year}`;
+  return formattedDate;
 };
