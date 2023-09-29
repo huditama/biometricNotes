@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+import { Note } from '../types/Notes';
 import { Colors } from '../themes/Colors';
 import { Routes } from '../navigation/Routes';
 import { formatDate } from '../utils/Helpers';
@@ -62,14 +63,24 @@ export const Notes = () => {
 
   const onPressAdd = async () => navigation.navigate(Routes.Editor);
 
+  const onPressNote = (note: Note) => () => {
+    navigation.navigate(Routes.Editor, {
+      noteData: note,
+    });
+  };
+
   return (
     <>
       <ScrollView style={Styles.container} contentContainerStyle={Styles.contentContainer}>
         <View style={Styles.notesContainer}>
           {
             sortedNotes.map((note, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <TouchableOpacity key={index} style={NoteCardStyles(index === notes.length)}>
+              <TouchableOpacity
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                onPress={onPressNote(note)}
+                style={NoteCardStyles(index === notes.length)}
+              >
                 <Text style={Styles.noteTitle}>{note.title}</Text>
                 <Text numberOfLines={1} ellipsizeMode="tail" style={Styles.noteSnippet}>{`${formatDate(note.updatedAt)} - ${note.note}`}</Text>
               </TouchableOpacity>

@@ -3,11 +3,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Routes } from './Routes';
 import { Notes } from '../screens/Notes';
-import { Editor } from '../screens/Editor';
+import { Note } from '../types/Notes';
 import { Authenticate } from '../screens/Authenticate';
 import { RootContext } from '../context/RootContext';
+// eslint-disable-next-line import/no-cycle
+import { Editor } from '../screens/Editor';
 
-const Stack = createNativeStackNavigator();
+export type RootNavigatorParamList = {
+  Authenticate: undefined;
+  Notes: undefined;
+  Editor: { noteData: Note } | undefined;
+};
+
+const Stack = createNativeStackNavigator<RootNavigatorParamList>();
 
 export const RootNavigator = () => {
   const { authenticated } = useContext(RootContext);

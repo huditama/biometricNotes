@@ -1,4 +1,6 @@
+import 'react-native-get-random-values';
 import CryptoJS from 'crypto-js';
+import { v4 as uuidv4 } from 'uuid';
 import SensitiveInfo from 'react-native-sensitive-info';
 import ReactNativeBiometrics from 'react-native-biometrics';
 
@@ -88,3 +90,5 @@ export const formatDate = (date: Date) => {
   const formattedDate = `${day}/${month}/${year}`;
   return formattedDate;
 };
+
+export const generateUUID = () => uuidv4();
