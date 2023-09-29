@@ -14,6 +14,7 @@ import {
   checkBiometricsAvailability,
   retrieveNotes,
 } from '../utils/Helpers';
+import { Colors } from '../themes/Colors';
 import { RootContext } from '../context/RootContext';
 
 const Styles = StyleSheet.create({
@@ -21,6 +22,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: Colors.WHITE,
   },
 });
 
