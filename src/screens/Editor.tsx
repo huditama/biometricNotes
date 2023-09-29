@@ -57,6 +57,9 @@ const Styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     paddingVertical: 8,
   },
+  textInput: {
+    color: Colors.BLACK,
+  },
 });
 
 interface EditorProps extends NativeStackScreenProps<RootNavigatorParamList, 'Editor'> { }
@@ -151,6 +154,8 @@ export const Editor: FC<EditorProps> = ({ route }) => {
         <View style={Styles.titleContainer}>
           <TextInput
             value={title}
+            style={Styles.textInput}
+            placeholderTextColor={Colors.VERY_LIGHT_GREY}
             onBlur={setHeaderButton('blur')}
             onFocus={setHeaderButton('focus')}
             placeholder="Title"
@@ -161,6 +166,8 @@ export const Editor: FC<EditorProps> = ({ route }) => {
         <View style={Styles.notesContainer}>
           <TextInput
             value={note}
+            style={Styles.textInput}
+            placeholderTextColor={Colors.VERY_LIGHT_GREY}
             onBlur={setHeaderButton('blur')}
             onFocus={setHeaderButton('focus')}
             placeholder="Add your text.."
