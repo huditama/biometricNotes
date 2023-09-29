@@ -56,7 +56,9 @@ export const Notes = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   const { notes } = useContext(RootContext);
-  const sortedNotes = notes.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+  const sortedNotes = notes.sort(
+    (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+  );
 
   const onPressAdd = async () => navigation.navigate(Routes.Editor);
 

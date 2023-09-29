@@ -5,6 +5,7 @@ import {
   Button,
 } from 'react-native';
 
+// import SInfo from 'react-native-sensitive-info';
 import {
   decryptNotes,
   storeEncryptionKey,
@@ -25,6 +26,7 @@ const Styles = StyleSheet.create({
 });
 
 export const Authenticate = () => {
+  // SInfo.deleteItem('Notes', {});
   const { setAuthenticated, setNotes } = useContext(RootContext);
 
   const fetchData = async () => {
