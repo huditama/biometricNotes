@@ -56,6 +56,7 @@ const Styles = StyleSheet.create({
   buttonContainer: {
     backgroundColor: Colors.WHITE,
     paddingVertical: 8,
+    paddingHorizontal: 16,
   },
   textInput: {
     color: Colors.BLACK,
